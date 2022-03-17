@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import DanhSachHocSinh from './DanhSachHocSinh';
 
 export default function Form() {
@@ -10,8 +10,19 @@ export default function Form() {
     }
   });
   const [danhSach, setDanhSach] = useState({
-    list: []
+    list: [],
+    countPerson:''
   });
+  useEffect(() => {
+    setInfo({
+      values:{
+        'userName': '',
+        'email': '',
+        'phone': ''
+      }
+    })
+  }, [danhSach])
+
   const handleChangeValue = (event) => {
     let { name, value } = event.target;
     let newValue = { ...info.values, [name]: value };
@@ -26,9 +37,9 @@ export default function Form() {
     let danhSachCapNhat = [...danhSach.list];
 
     setDanhSach({
-      list: danhSachCapNhat
+      list: danhSachCapNhat,
+      countPerson:danhSachCapNhat.length
     })
-
   }
 
   const xoaPerson = (userName) => {
@@ -37,10 +48,14 @@ export default function Form() {
       danhSach.list.splice(index, 1);
     }
     let danhSachCapNhat = [...danhSach.list];
+    let total_count = danhSachCapNhat.length;
     setDanhSach({
-      list: danhSachCapNhat
+      list: danhSachCapNhat,
+      countPerson:total_count
     })
+
   }
+ 
 
   return (
     <div className="container pt-5">
@@ -81,6 +96,10 @@ export default function Form() {
           <button className="btn text-white bg-dark " style={{ fontSize: 25 }}>Lưu</button>
         </div>
       </form>
+      <div>
+        <p>Số lượng:{danhSach.countPerson}</p>
+           
+      </div>
       <DanhSachHocSinh list={danhSach.list} xoaPerson={xoaPerson} />
     </div>
   )
