@@ -5,7 +5,8 @@ const FormStudent = (props) => {
         <input
             className={props.className}
             type={props.type}
-            onClick = {props.onClick}
+            onChange = {props.onChange}
+            value = {props.value}
         />
     )
 }
